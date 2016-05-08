@@ -29,7 +29,15 @@ if [ ! -e $Z_VIM/bundle/Vundle.vim ]; then
     git clone https://github.com/VundleVim/Vundle.vim.git $Z_VIM/bundle/Vundle.vim
 fi
 
-echo "VIM====>> Step4: UPDATE/INSTALL PLUGINS USING VUNDLE"
+echo "VIM====>> Step4: INSTALL YCM"
+if [ ! -e $Z_VIM/bundle/YouCompleteMe ]; then
+    git clone https://github.com/Valloric/YouCompleteMe.git $Z_VIM/bundle/YouCompleteMe
+    cd $Z_VIM/bundle/YouCompleteMe/
+    git submodule update --init --recursive
+    python install.py
+fi
+
+echo "VIM====>> Step5: UPDATE/INSTALL PLUGINS USING VUNDLE"
 system_shell=$SHELL
 export SHELL="/bin/sh"
 vim -u $HOME/.vimrc.bundles +BundleInstall! +BundleClean +qall

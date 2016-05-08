@@ -17,7 +17,7 @@ call vundle#begin()                 " [必须]安装开始
 Plugin 'VundleVim/Vundle.vim'       " [必须]使用Vundle来管理插件
 
 if !exists('g:zero1898_bundle_groups')
-    let g:zero1898_bundle_groups=['general', 'neocomplete', 'markdown']
+    let g:zero1898_bundle_groups=['general', 'youcompleteme', 'markdown']
 endif
 " ====================================================================================
 
@@ -44,10 +44,9 @@ if count(g:zero1898_bundle_groups, 'general')
     Plugin 'tpope/vim-repeat'                   " 重复上一次动作
 endif
 
-if count(g:zero1898_bundle_groups, 'neocomplete')
-    Plugin 'Shougo/neocomplete.vim.git'
-    Plugin 'Shougo/neosnippet'
-    Plugin 'Shougo/neosnippet-snippets'
+if count(g:zero1898_bundle_groups, 'youcompleteme')
+    Plugin 'Valloric/YouCompleteMe'
+    Plugin 'SirVer/ultisnips'
     Plugin 'honza/vim-snippets'
 endif
 
