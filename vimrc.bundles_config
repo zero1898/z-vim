@@ -1,0 +1,430 @@
+"==========================================
+" Author: nero
+" Email: zero1898@foxmail.com
+"==========================================
+
+if count(g:zero1898_bundle_groups, 'general')
+
+    " solarized {{{
+    let g:solarized_termtrans=1
+    let g:solarized_contrast="normal"
+    let g:solarized_visibility="normal"
+    let g:solarized_termcolors=256
+    color solarized
+    " }}}
+
+    " vim-airline {{{
+    if !exists('g:airline_symbols')
+        let g:airline_symbols = {}
+    endif
+    let g:airline_left_sep = '▶'
+    let g:airline_left_alt_sep = '❯'
+    let g:airline_right_sep = '◀'
+    let g:airline_right_alt_sep = '❮'
+    let g:airline_symbols.linenr = '¶'
+    let g:airline_symbols.branch = '⎇'
+    " }}}
+
+    " vim-fugitive {{{
+    " nnoremap <silent> <leader>gs :Gstatus<CR>
+    " nnoremap <silent> <leader>gd :Gdiff<CR>
+    " nnoremap <silent> <leader>gc :Gcommit<CR>
+    " nnoremap <silent> <leader>gb :Gblame<CR>
+    " nnoremap <silent> <leader>gl :Glog<CR>
+    " nnoremap <silent> <leader>gp :Git push<CR>
+    " nnoremap <silent> <leader>gr :Gread<CR>
+    " nnoremap <silent> <leader>gw :Gwrite<CR>
+    " nnoremap <silent> <leader>ge :Gedit<CR>
+    " " Mnemonic _i_nteractive
+    " nnoremap <silent> <leader>gi :Git add -p %<CR>
+    " nnoremap <silent> <leader>gg :SignifyToggle<CR>
+    " }}}
+
+    " rainbow_parentheses.vim {{{
+    let g:rbpt_colorpairs = [
+                \ ['brown',       'RoyalBlue3'],
+                \ ['Darkblue',    'SeaGreen3'],
+                \ ['darkgray',    'DarkOrchid3'],
+                \ ['darkgreen',   'firebrick3'],
+                \ ['darkcyan',    'RoyalBlue3'],
+                \ ['darkred',     'SeaGreen3'],
+                \ ['darkmagenta', 'DarkOrchid3'],
+                \ ['brown',       'firebrick3'],
+                \ ['gray',        'RoyalBlue3'],
+                \ ['darkmagenta', 'DarkOrchid3'],
+                \ ['Darkblue',    'firebrick3'],
+                \ ['darkgreen',   'RoyalBlue3'],
+                \ ['darkcyan',    'SeaGreen3'],
+                \ ['darkred',     'DarkOrchid3'],
+                \ ['red',         'firebrick3'],
+                \ ]
+    let g:rbpt_max = 16
+    let g:rbpt_loadcmd_toggle = 0
+    au VimEnter * RainbowParenthesesToggle
+    au Syntax * RainbowParenthesesLoadRound
+    au Syntax * RainbowParenthesesLoadSquare
+    au Syntax * RainbowParenthesesLoadBraces
+    " }}}
+
+    " delimitMate {{{
+    " for python docstring ",优化输入
+    au FileType python let b:delimitMate_nesting_quotes = ['"']
+    au FileType php let delimitMate_matchpairs = "(:),[:],{:}"
+    " 关闭某些类型文件的自动补全
+    "au FileType mail let b:delimitMate_autoclose = 0
+    " }}}
+
+    " vim-indent-guides {{{
+    " 随 vim 自启动
+    let g:indent_guides_enable_on_vim_startup=1
+    " 从第二层开始可视化显示缩进
+    let g:indent_guides_start_level=2
+    " 色块宽度
+    let g:indent_guides_guide_size=1
+    " }}}
+
+    " vim-easymotion {{{
+    " 用法1: 跳转到当前光标前后的位置(w/b)
+    "        快捷键<leader><leader>w(即,,w)和<leader><leader>b(即,,b)
+    "        助记: word and back
+    " 用法2: 搜索跳转(s)
+    "        快捷键<leader><leader>s(即,,s), 然后输入要搜索的字母, 这个跳转是双向的
+    "        助记: search
+    let g:EasyMotion_smartcase = 1
+    "let g:EasyMotion_startofline = 0 " keep cursor colum when JK motion
+    map <leader><leader>h <plug>(easymotion-linebackward)
+    map <leader><leader>j <plug>(easymotion-j)
+    map <leader><leader>k <Plug>(easymotion-k)
+    map <leader><leader>l <plug>(easymotion-lineforward)
+    " 重复上一次操作, 类似repeat插件, 很强大
+    map <leader><leader>. <Plug>(easymotion-repeat)
+    " }}}
+
+    " vim-multiple-cursors {{{
+    let g:multi_cursor_use_default_mapping=0
+    " Default mapping
+    let g:multi_cursor_next_key='<C-m>'
+    let g:multi_cursor_prev_key='<C-p>'
+    let g:multi_cursor_skip_key='<C-x>'
+    let g:multi_cursor_quit_key='<Esc>'
+    " }}}
+
+    " vim-signature {{{
+    " 显示marks - 方便自己进行标记和跳转
+    " m[a-zA-Z] add mark
+    " '[a-zA-Z] go to mark
+    " m<Space>  del all marks
+    " m/        list all marks
+    " }}}
+
+    " nerdtree {{{
+    map <F9> :NERDTreeToggle<CR>
+    let NERDTreeShowBookmarks=1
+    let NERDTreeChDirMode=0
+    let NERDTreeQuitOnOpen=1
+    let NERDTreeHighlightCursorline=1
+    let NERDTreeWinPos="left"
+    let NERDTreeWinSize=22
+    let NERDTreeMouseMode=2
+    let NERDTreeShowHidden=1
+    let g:NERDTreeDirArrowExpandable = '▸'
+    let g:NERDTreeDirArrowCollapsible = '▾'
+    " s/v 分屏打开文件
+    let g:NERDTreeMapOpenSplit = 's'
+    let g:NERDTreeMapOpenVSplit = 'v'
+    let NERDTreeIgnore=['\.pyc$', '\.pyo', '\~$', '\.obj$', '\.o$', '\.so$', '^\.git$', '\.swo$', '\.swp$', '^\.hg$', '^\.svn$', '\.bzr$']
+    "close vim if the only window left open is a NERDTree
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
+    autocmd vimenter * if !argc() | NERDTree | endif
+
+    map <F9> <plug>NERDTreeTabsToggle<CR>
+    " 关闭同步
+    let g:nerdtree_tabs_synchronize_view=0
+    let g:nerdtree_tabs_synchronize_focus=0
+    " 是否自动开启nerdtree
+    let g:nerdtree_tabs_open_on_console_startup=0
+    let g:nerdtree_tabs_open_on_gui_startup=0
+    " }}}
+
+    " tagbar {{{
+    " 设置显示／隐藏标签列表子窗口的快捷键
+    nmap <F10> :TagbarToggle<CR>
+    " 设置 tagbar 子窗口的位置出现在主编辑区的左边
+    let tagbar_left=1
+    " 设置标签子窗口的宽度
+    let tagbar_width=32
+    " tagbar 子窗口中不显示冗余帮助信息
+    let g:tagbar_compact=1
+    " 启动时自动focus
+    let g:tagbar_autofocus=1
+    " }}}
+
+    " ctrlp {{{
+    let g:ctrlp_map = '<leader>p'
+    let g:ctrlp_cmd = 'CtrlP'
+    map <leader>f :CtrlPMRU<CR>
+    let g:ctrlp_custom_ignore = {
+                \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
+                \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc)$',
+                \ }
+    let g:ctrlp_working_path_mode=0
+    let g:ctrlp_match_window_bottom=1
+    let g:ctrlp_max_height=15
+    let g:ctrlp_match_window_reversed=0
+    let g:ctrlp_mruf_max=500
+    let g:ctrlp_follow_symlinks=1
+
+    " ctrlpfunky
+    " ctrlp插件 - 不用ctag进行函数快速跳转
+    nnoremap <Leader>fu :CtrlPFunky<Cr>
+    " narrow the list down with a word under cursor
+    nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+    let g:ctrlp_funky_syntax_highlight = 1
+
+    " CtrlP extensions
+    let g:ctrlp_extensions = ['funky']
+    " }}}
+
+    " syntastic {{{
+    set statusline+=%#warningmsg#
+    set statusline+=%{SyntasticStatuslineFlag()}
+    set statusline+=%*
+
+    " to see error location list
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_auto_loc_list = 1
+    let g:syntastic_check_on_open = 1
+    let g:syntastic_check_on_wq = 0
+    let g:syntastic_error_symbol = '>>'
+    let g:syntastic_warning_symbol = '>'
+    let g:syntastic_enable_highlighting=1
+    let g:syntastic_enable_signs = 1
+    let g:syntastic_auto_jump = 0
+    let g:syntastic_loc_list_height = 5
+
+    " python语法检测
+    let g:syntastic_python_checkers=['pyflakes', 'pep8']
+    let g:syntastic_python_pep8_args='--ignore=E501,E225,E124,E712'
+    " php语法检测
+    let g:syntastic_php_checkers = ['php', 'phpcs']
+    " javascript语法检测
+    let g:syntastic_javascript_checkers = ['jshint']
+    " html语法检测
+    let g:syntastic_html_checkers=['jshint']
+
+    function! ToggleErrors()
+        let old_last_winnr = winnr('$')
+        lclose
+        if old_last_winnr == winnr('$')
+            " Nothing was closed, open syntastic_error location panel
+            Errors
+        endif
+    endfunction
+    nnoremap <Leader>s :call ToggleErrors()<cr>
+
+    " ,en ,ep to jump between errors
+    function! <SID>LocationPrevious()
+        try
+            lprev
+        catch /^Vim\%((\a\+)\)\=:E553/
+            llast
+        endtry
+    endfunction
+
+    function! <SID>LocationNext()
+        try
+            lnext
+        catch /^Vim\%((\a\+)\)\=:E553/
+            lfirst
+        endtry
+    endfunction
+
+    nnoremap <silent> <Plug>LocationPrevious    :<C-u>exe 'call <SID>LocationPrevious()'<CR>
+    nnoremap <silent> <Plug>LocationNext        :<C-u>exe 'call <SID>LocationNext()'<CR>
+    nmap <silent> <Leader>ep    <Plug>LocationPrevious
+    nmap <silent> <Leader>en    <Plug>LocationNext
+
+    " 修改高亮的背景色, 适应主题
+    highlight SyntasticErrorSign guifg=white guibg=black
+
+    " 禁止插件检查java
+    let g:syntastic_mode_map = {'mode': 'active', 'passive_filetypes': ['java'] }
+    " }}}
+
+    " nerdcommenter {{{
+    " <leader>cc   加注释
+    " <leader>cu   解开注释
+    " <leader>c<space>  加上/解开注释, 智能判断
+    " <leader>cy   先复制, 再注解(p可以进行黏贴)
+    " 注释的时候自动加个空格
+    let g:NERDSpaceDelims=1
+    " }}}
+
+    " vim-trailing-whitespace {{{
+    " 快速去行尾空格 [, + <Space>]
+    map <leader><space> :FixWhitespace<cr>
+    " }}}
+
+    " vim-easy-align {{{
+    vmap <Leader>a <plug>(EasyAlign)
+    nmap <Leader>a <Plug>(EasyAlign)
+    if !exists('g:easy_align_delimiters')
+        let g:easy_align_delimiters = {}
+    endif
+    let g:easy_align_delimiters['#'] = { 'pattern': '#', 'ignore_groups': ['String'] }
+    " }}}
+
+    " vim-surround {{{
+    " 替换: cs"'
+    "Hello world!" -> 'Hello world!'
+
+    " 替换-标签(t=tag): cst"
+    "<a>abc</a>  -> "abc"
+    " cst<html>
+    "<a>abc</a>  -> <html>abc</html>
+
+    " 删除: ds"
+    "Hello world!" -> Hello world!
+
+    " 添加(ys=you surround): ysiw"
+    "Hello -> "Hello"
+
+    " 添加: csw"
+    "Hello -> "Hello"
+
+    " 添加-整行: yss"
+    "Hello world -> "Hello world"
+
+    " ySS"
+    " Hello world ->
+    " "
+    "     hello world
+    " "
+
+    " 添加-两个词: veeS"
+    "hello world -> "hello world"
+
+    " 添加-当前到行尾: ys$"
+
+    " 左符号/右符号 => 带不带空格
+    "cs([
+    "(hello) -> [ hello ]
+
+    "cs(]
+    "(hello) -> [hello]
+
+    " }}}
+
+    " vim-repeat {{{
+    "for repeat -> enhance surround.vim, . to repeat command
+    " }}}
+
+endif
+
+
+if count(g:zero1898_bundle_groups, 'neocomplete')
+
+    " neocomplete {{{
+    "Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+    " Disable AutoComplPop.
+    let g:acp_enableAtStartup = 0
+    " Use neocomplete.
+    let g:neocomplete#enable_at_startup = 1
+    " Use smartcase.
+    let g:neocomplete#enable_smart_case = 1
+    " Set minimum syntax keyword length.
+    let g:neocomplete#sources#syntax#min_keyword_length = 3
+    let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+    " Define dictionary.
+    let g:neocomplete#sources#dictionary#dictionaries = {
+                \ 'default' : '',
+                \ 'vimshell' : $HOME.'/.vimshell_hist',
+                \ 'scheme' : $HOME.'/.gosh_completions'
+                \ }
+
+    " Define keyword.
+    if !exists('g:neocomplete#keyword_patterns')
+        let g:neocomplete#keyword_patterns = {}
+    endif
+    let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+    " Plugin key-mappings.
+    inoremap <expr><C-g>     neocomplete#undo_completion()
+    inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+    " Recommended key-mappings.
+    " <CR>: close popup and save indent.
+    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+    function! s:my_cr_function()
+        return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+        " For no inserting <CR> key.
+        "return pumvisible() ? "\<C-y>" : "\<CR>"
+    endfunction
+    " <TAB>: completion.
+    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+    " <C-h>, <BS>: close popup and delete backword char.
+    inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+    inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+    " Close popup by <Space>.
+    "inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+
+    " AutoComplPop like behavior.
+    "let g:neocomplete#enable_auto_select = 1
+
+    " Shell like behavior(not recommended).
+    "set completeopt+=longest
+    "let g:neocomplete#enable_auto_select = 1
+    "let g:neocomplete#disable_auto_complete = 1
+    "inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+    " Enable omni completion.
+    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+    autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+    autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+    autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+
+    " Enable heavy omni completion.
+    if !exists('g:neocomplete#sources#omni#input_patterns')
+        let g:neocomplete#sources#omni#input_patterns = {}
+    endif
+    "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+    "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+    "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+    " For perlomni.vim setting.
+    " https://github.com/c9s/perlomni.vim
+    let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+    " }}}
+
+    " neosnippet {{{
+    " Plugin key-mappings.
+    imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+    smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+    xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+    " SuperTab like snippets behavior.
+    "imap <expr><TAB>
+    " \ pumvisible() ? "\<C-n>" :
+    " \ neosnippet#expandable_or_jumpable() ?
+    " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+    smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+                \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+    " For conceal markers.
+    if has('conceal')
+        set conceallevel=2 concealcursor=niv
+    endif
+
+    " Enable snipMate compatibility feature.
+    let g:neosnippet#enable_snipmate_compatibility = 1
+
+    " Tell Neosnippet about the other snippets
+    let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
+    " }}}
+
+endif

@@ -1,0 +1,464 @@
+"==========================================
+" Author: nero
+" Email: zero1898@foxmail.com
+"==========================================
+" =====================================================
+" 基础设置
+" =====================================================
+" 修改leader键
+let mapleader = ','
+let g:mapleader = ','
+
+" 开启文件类型侦测
+filetype on
+" 根据侦测到的不同类型加载对应的插件
+filetype plugin on
+
+" 设置脚本编码为utf-8
+scriptencoding utf-8
+
+" 设置终端title
+set title
+
+" 启动的时候不显示那个援助索马里儿童的提示
+set shortmess=atI
+
+" 鼠标只在普通模式下可用
+set mouse=n
+" 在键入时自动隐藏鼠标光标
+set mousehide
+
+" 去掉输入错误的提示声音
+set novisualbell
+set noerrorbells
+set t_vb=
+set tm=500
+
+" 退出vim后，内容显示在终端屏幕, 可以用于查看和复制
+set t_ti= t_te=
+
+" 保存全局变量
+set viminfo+=!
+
+" history存储容量
+set history=1000
+
+" 文件修改之后自动载入。
+set autoread
+" 切换buffer自动保存
+set autowrite
+
+" 取消备份。视情况自己改
+set nobackup
+" 不写入备份文件
+set nowritebackup
+" 关闭交换文件
+set noswapfile
+
+" 通过使用: commands命令，告诉我们文件的哪一行被改变过
+set report=0
+
+" 退格键分别可删除缩进，上一行结束，insert之前的字
+set backspace=indent,eol,start
+
+" 持续撤销
+if has('persistent_undo')
+  " How many undos
+  set undolevels=1000
+  " number of lines to save for undo
+  set undoreload=10000
+  " So is persistent undo ...
+  set undofile
+  " set noundofile
+  set undodir=/tmp/vimundo/
+endif
+
+" 黏贴板
+if has('clipboard')
+    if has('unnamedplus')
+        set clipboard=unnamed,unnamedplus
+    else
+        set clipboard=unnamed
+    endif
+endif
+
+" 打开自动定位到最后编辑的位置, 需要确认 .viminfo 当前用户可写
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
+" 开启新的buffer时，自动转到对应文件目录
+let g:autochdir = 1
+if exists('g:autochdir')
+    autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
+endif
+
+" =====================================================
+" 背景与主题
+" =====================================================
+" 设置一个黑色的背景
+set background=dark
+
+" Set extra options when running in GUI mode
+if has("gui_running")
+    set guifont=Monaco:h14
+    " 禁止显示滚动条
+    set guioptions-=l
+    set guioptions-=L
+    set guioptions-=r
+    set guioptions-=R
+    " 禁止显示菜单和工具条
+    set guioptions-=m
+    set guioptions-=Tk
+    set guitablabel=%M\ %t
+    set showtabline=1
+    set noimd
+    if has("gui_gtk2") "GTK2
+        set guifont=Monaco\ 12,Monospace\ 12
+    endif
+else
+    if &term == 'xterm' || &term == 'screen'
+        set t_Co=256
+    endif
+endif
+
+" =====================================================
+" 编码
+" =====================================================
+" 设置新文件的编码为 UTF-8
+set encoding=utf-8
+" 自动判断编码时，依次尝试以下编码：
+set fileencodings=utf-8,gb18030,gbk,big5,cp936,bucs-bom,ig5,euc-jp,euc-kr,latin1
+set helplang=cn
+" 语言设置
+set langmenu=zh_CN.UTF-8
+" 下面这句只影响普通模式 (非图形界面) 下的 Vim。
+set termencoding=utf-8
+" 这三种格式支持所有
+set fileformats=unix,dos,mac
+
+" 描述自动排版如何进行的字母序列
+set formatoptions+=q
+set formatoptions+=r
+set formatoptions+=n
+set formatoptions+=1
+
+" =====================================================
+" 高亮
+" =====================================================
+" 开启语法高亮功能
+syntax enable
+" 允许用指定语法高亮配色方案替换默认方案
+syntax on
+
+" 设置可以高亮的关键字
+if has("autocmd")
+  " Highlight TODO, FIXME, NOTE, etc.
+  if v:version > 701
+    autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|DONE\|XXX\|BUG\|HACK\)')
+    autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\|NOTICE\)')
+  endif
+endif
+
+" for error highlight，防止错误整行标红导致看不清
+highlight clear SpellBad
+highlight SpellBad term=standout ctermfg=1 term=underline cterm=underline
+highlight clear SpellCap
+highlight SpellCap term=underline cterm=underline
+highlight clear SpellRare
+highlight SpellRare term=underline cterm=underline
+highlight clear SpellLocal
+highlight SpellLocal term=underline cterm=underline
+
+" =====================================================
+" 标签与窗口
+" =====================================================
+" 最多显示15个标签
+set tabpagemax=15
+
+" 缓冲区切换隐藏不关闭
+set hidden
+
+" 将拆分的窗口放在右侧和下方
+set splitright
+set splitbelow
+
+" 在被分割的窗口间显示空白，便于阅读
+set fillchars=vert:\ ,stl:\ ,stlnc:\
+
+" 在上下移动光标时，光标的上方或下方至少会保留显示的行数
+set scrolloff=3
+
+" 多窗口编辑时, 临时放大某个窗口, 编辑完再切回原来的布局
+function! s:ZoomToggle() abort
+    if exists('t:zoomed') && t:zoomed
+        execute t:zoom_winrestcmd
+        let t:zoomed = 0
+    else
+        let t:zoom_winrestcmd = winrestcmd()
+        resize
+        vertical resize
+        let t:zoomed = 1
+    endif
+endfunction
+command! ZoomToggle call s:ZoomToggle()
+nnoremap <silent> <Leader>z :ZoomToggle<CR>
+
+" =====================================================
+" 状态栏显示
+" =====================================================
+" 左下角显示当前vim模式
+set showmode
+
+" 打开状态栏标尺
+set ruler
+set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%)
+" 在状态栏显示正在输入的命令
+set showcmd
+" 命令行（在状态行下）的高度，默认为1，这里是2
+set cmdheight=2
+
+" 总是显示状态栏
+set laststatus=2
+" 状态行显示的内容
+" 文件名
+set statusline=%<%f\
+" 选项
+set statusline+=%w%h%m%r
+" git信息
+set statusline+=%{fugitive#statusline()}
+" 文件类型
+set statusline+=\ [%{&ff}/%Y]
+" 当前目录
+set statusline+=\ [%{getcwd()}]
+" 右对齐文件导航信息
+set statusline+=%=%-14.(%l,%c%V%)\ %p%%
+
+" =====================================================
+" 行列显示
+" =====================================================
+" 取消自动折行
+set nowrap
+
+" 带有如下符号的单词不要被换行分割
+set iskeyword+=_,$,@,%,#,-,.
+
+" 字符间插入的像素行数目
+set linespace=0
+
+" 突出显示当前行
+set cursorline
+
+" 设置标记一列的背景颜色和数字一行颜色一致
+hi! link SignColumn LineNr
+hi! link ShowMarksHLl DiffAdd
+hi! link ShowMarksHLu DiffChange
+
+" 显示行号
+set number
+
+" 使用ctrl+n切换功能
+" 相对行号，行号变成相对，可以用 nj nk 进行跳转 5j 5k 上下跳5行
+set relativenumber number
+au FocusLost * :set norelativenumber number
+au FocusGained * :set relativenumber
+" 插入模式下用绝对行号, 普通模式下用相对
+autocmd InsertEnter * :set norelativenumber number
+autocmd InsertLeave * :set relativenumber
+function! NumberToggle()
+    if(&relativenumber == 1)
+        set norelativenumber number
+    else
+        set relativenumber
+    endif
+endfunc
+nnoremap <C-n> :call NumberToggle()<cr>
+
+" =====================================================
+" 搜索显示
+" =====================================================
+" 键入闭括号时显示它与前面的哪个开括号匹配,对于大，中，小括号都适用
+set showmatch
+
+" 打开增量搜索模式,随着键入即时搜索
+set incsearch
+
+" 搜索逐字符高亮
+set hlsearch
+
+" 搜索时忽略大小写
+set ignorecase
+
+" 有一个或以上大写字母时仍大小写敏感
+set smartcase
+
+" 设置魔术,除了 $ . * ^ 之外其他元字符都要加反斜杠
+set magic
+" 查找,匹配模式采用very magic,所有的字符都不用加反斜杠
+nnoremap / /\v
+vnoremap / /\v
+" 替换,匹配模式采用very magic,所有的字符都不用加反斜杠
+map \ :%s/\v
+
+" 去掉搜索高亮
+noremap <silent><leader>/ :nohls<CR>
+
+" 增强模式中的命令行自动完成操作
+set wildmenu
+" 自动补全时，匹配最长子串，列出文件
+set wildmode=list:longest,full
+" Ignore compiled files
+set wildignore=*.o,*~,*.pyc,*.class
+
+" =====================================================
+" 缩进
+" =====================================================
+" 自适应不同语言的智能缩进
+filetype indent on
+
+" 打开自动缩进
+set autoindent
+set cindent
+
+" tab相关变更
+" 设置格式化时制表符占用空格数
+set shiftwidth=4
+" 将制表符扩展为空格[需要输入真正的Tab键时，使用 Ctrl+V + Tab]
+set expandtab
+" 设置编辑时制表符占用空格数
+set tabstop=4
+" 让 vim 把连续数量的空格视为一个制表符
+set softtabstop=4
+" 解决 shiftwidth 和 tabstop 不等时的麻烦,在行首输入 tab 时插入宽度为 shiftwidth 的空白，在其他地方按 tabstop 和 softtabstop 处理
+set smarttab
+" 缩进时，取整
+set shiftround
+
+" Highlight problematic whitespace
+set list
+set listchars=tab:›\ ,trail:•,extends:#,nbsp:.
+
+" 具体编辑文件类型的一般设置，比如不要 tab 等
+autocmd BufNewFile,BufRead *.py,*.pyw set filetype=python
+autocmd FileType python set tabstop=4 shiftwidth=4 expandtab ai
+autocmd FileType ruby,javascript,html,css,xml set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
+autocmd BufRead,BufNewFile *.md,*.mkd,*.markdown set filetype=markdown.mkd
+autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
+autocmd BufRead,BufNewFile *.part set filetype=html
+" disable showmatch when use > in php
+au BufWinEnter *.php set mps-=<:>
+
+" when in insert mode, press <F12> to go to
+set pastetoggle=<F12>
+" disbale paste mode when leaving insert mode
+au InsertLeave * set nopaste
+
+" =====================================================
+" 代码折叠
+" =====================================================
+" 代码折叠方法
+" manual 手工折叠
+" indent 使用缩进表示折叠
+" expr 使用表达式定义折叠
+" syntax 使用语法定义折叠
+" diff 对没有更改的文本进行折叠
+" marker 使用标记进行折叠, 默认标记是 {{{ 和 }}}
+set foldmethod=indent
+" 启动 vim 时关闭折叠代码
+set nofoldenable
+" 折叠深度
+set foldcolumn=0
+set foldlevel=99
+
+" 代码折叠自定义快捷键
+let g:FoldMethod = 0
+map <leader>zz :call ToggleFold()<cr>
+fun! ToggleFold()
+    if g:FoldMethod == 0
+        exe "normal! zM"
+        let g:FoldMethod = 1
+    else
+        exe "normal! zR"
+        let g:FoldMethod = 0
+    endif
+endfun
+
+" =====================================================
+" 自定义快捷键设置
+" =====================================================
+" 关闭方向键, 强迫自己用 hjkl
+map <Left> <Nop>
+map <Right> <Nop>
+map <Up> <Nop>
+map <Down> <Nop>
+
+"Treat long lines as break lines (useful when moving around in them)
+"set swap之后，同物理行上线直接跳
+nnoremap k gk
+nnoremap gk k
+nnoremap j gj
+nnoremap gj j
+
+" w!!强制保存文件
+cmap w!! w !sudo tee >/dev/null %
+
+" 搜索的内容总是在屏幕中心显示
+nnoremap <silent> n nzz
+nnoremap <silent> N Nzz
+nnoremap <silent> * *zz
+nnoremap <silent> # #zz
+nnoremap <silent> g* g*zz
+
+" Buffers操作快捷方式
+nnoremap [b :bprevious<cr>
+nnoremap ]b :bnext<cr>
+noremap <left> :bp<CR>
+noremap <right> :bn<CR>
+
+" 新建tab  Ctrl+t
+nnoremap <C-t>     :tabnew<CR>
+inoremap <C-t>     <Esc>:tabnew<CR>
+" normal模式下切换到确切的tab
+noremap <leader>1 1gt
+noremap <leader>2 2gt
+noremap <leader>3 3gt
+noremap <leader>4 4gt
+noremap <leader>5 5gt
+noremap <leader>6 6gt
+noremap <leader>7 7gt
+noremap <leader>8 8gt
+noremap <leader>9 9gt
+noremap <leader>0 :tablast<cr>
+
+" 交换 ' `, 使得可以快速使用'跳到marked位置
+nnoremap ' `
+nnoremap ` '
+
+" =====================================================
+" <Fn>功能键设置
+" =====================================================
+" F1 废弃这个键,防止调出系统帮助
+noremap <F1> <Esc>"
+
+" F2 行号开关，用于鼠标复制代码用
+function! HideNumber()
+    if(&relativenumber == &number)
+        set relativenumber! number!
+    elseif(&number)
+        set number!
+    else
+        set relativenumber!
+    endif
+    set number?
+endfunc
+noremap <F2> :call HideNumber()<CR>
+
+" F3 显示可打印字符开关
+nnoremap <F3> :set list! list?<CR>
+
+" F4 换行开关
+nnoremap <F4> :set wrap! wrap?<CR>
+
+" F5 语法开关，关闭语法可以加快大文件的展示
+nnoremap <F5> :exec exists('syntax_on') ? 'syn off' : 'syn on'<CR>
+

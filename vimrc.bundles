@@ -1,0 +1,62 @@
+"==========================================
+" Author: nero
+" Email: zero1898@foxmail.com
+"==========================================
+
+" ====================================================================================
+" Vundle简要帮助文档
+" :PluginList       - 列出所有已配置的插件
+" :PluginInstall    - 安装插件,追加 `!` 用以更新或使用 :PluginUpdate
+" :PluginSearch foo - 搜索 foo ; 追加 `!` 清除本地缓存
+" :PluginClean      - 清除未使用插件,需要确认; 追加 `!` 自动批准移除未使用插件
+" ====================================================================================
+set nocompatible                    " [必须]非兼容vi模式。去掉vi一致性
+filetype off                        " [必须]关闭检测文件类型
+set rtp+=~/.vim/bundle/Vundle.vim/  " [必须]设置运行时路径
+call vundle#begin()                 " [必须]安装开始
+Plugin 'VundleVim/Vundle.vim'       " [必须]使用Vundle来管理插件
+
+if !exists('g:zero1898_bundle_groups')
+    let g:zero1898_bundle_groups=['general', 'neocomplete', 'markdown']
+endif
+" ====================================================================================
+
+if count(g:zero1898_bundle_groups, 'general')
+    Plugin 'altercation/vim-colors-solarized'   " 主题 solarized
+    Plugin 'vim-airline/vim-airline'            " 状态栏美观
+    Plugin 'tpope/vim-fugitive'                 " 状态栏git
+    Plugin 'kien/rainbow_parentheses.vim'       " 括号显示增强
+    Plugin 'Raimondi/delimitMate'               " 符号自动补全
+    Plugin 'nathanaelkane/vim-indent-guides'    " 缩进引导线
+    Plugin 'easymotion/vim-easymotion'          " 快速跳转
+    Plugin 'terryma/vim-multiple-cursors'       " 多光标操作
+    Plugin 'kshenoy/vim-signature'              " 标记跳转
+    Plugin 'scrooloose/nerdtree'                " 目录导航1
+    Plugin 'jistr/vim-nerdtree-tabs'            " 目录导航2
+    Plugin 'majutsushi/tagbar'                  " 大纲式导航
+    Plugin 'kien/ctrlp.vim'                     " 文件搜索
+    Plugin 'tacahiroy/ctrlp-funky'              " 函数模糊搜索
+    Plugin 'scrooloose/syntastic'               " 语法检查
+    Plugin 'scrooloose/nerdcommenter'           " 快速加/减注释
+    Plugin 'bronson/vim-trailing-whitespace'    " 去除行尾空格
+    Plugin 'junegunn/vim-easy-align'            " 快速对齐
+    Plugin 'tpope/vim-surround'                 " 快速加入环绕字符
+    Plugin 'tpope/vim-repeat'                   " 重复上一次动作
+endif
+
+if count(g:zero1898_bundle_groups, 'neocomplete')
+    Plugin 'Shougo/neocomplete.vim.git'
+    Plugin 'Shougo/neosnippet'
+    Plugin 'Shougo/neosnippet-snippets'
+    Plugin 'honza/vim-snippets'
+endif
+
+if count(g:zero1898_bundle_groups, 'markdown')
+    Plugin 'plasticboy/vim-markdown'
+endif
+
+" ====================================================================================
+call vundle#end()         " [必须]安装结束
+filetype plugin indent on " [必须]加载vim自带和插件相关的语法和文件类型相关脚本
+" ====================================================================================
+
