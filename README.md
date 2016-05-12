@@ -29,11 +29,11 @@ sudo apt-get -y install build-essential cmake
 
 ### 3.安装vim依赖
 ```shell
-sudo apt-get install libncurses5-dev libgnome2-dev libgnomeui-dev \
-    libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
-    libcairo2-dev libx11-dev libxpm-dev libxt-dev \
+sudo apt-get install libncurses5-dev \
     python python3 python-dev python3-dev \
-    ruby-dev libperl-dev lua5.2 lua5.2-dev
+    ruby ruby-dev \
+    perl libperl-dev \
+    lua5.2 lua5.2-dev
 ```
 
 ### 4.从github下载vim源码
@@ -54,7 +54,7 @@ cd vim/src
     --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu \
     --enable-perlinterp \
     --enable-luainterp \
-    --enable-gui=gtk2 --enable-cscope --prefix=/usr
+    --enable-cscope --prefix=/usr
 # --with-features=huge：支持最大特性
 # --enable-multibyte：多字节支持 可以在Vim中输入中文
 # --enable-rubyinterp：启用Vim对ruby编写的插件的支持
@@ -62,7 +62,6 @@ cd vim/src
 # --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu/ 指定 python 路径
 # --enable-perlinterp：启用Vim对perl编写的插件的支持
 # --enable-luainterp：启用Vim对lua编写的插件的支持
-# --enable-gui=gtk2：gtk2支持,也可以使用gnome，表示生成gvim
 # --enable-cscope：Vim对cscope支持
 # --prefix=/usr：编译安装路径
 # 需要重新配置可 输入 make distclean 清理一下上一次编译生成的所有文件
