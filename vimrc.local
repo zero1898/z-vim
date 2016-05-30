@@ -9,6 +9,9 @@
 let mapleader = ','
 let g:mapleader = ','
 
+" 设置一个黑色的背景
+set background=dark
+
 " 开启文件类型侦测
 filetype on
 " 根据侦测到的不同类型加载对应的插件
@@ -94,46 +97,20 @@ if exists('g:autochdir')
 endif
 
 " =====================================================
-" 背景与主题
-" =====================================================
-" 设置一个黑色的背景
-set background=dark
-
-" Set extra options when running in GUI mode
-if has("gui_running")
-    set guifont=Monaco:h14
-    " 禁止显示滚动条
-    set guioptions-=l
-    set guioptions-=L
-    set guioptions-=r
-    set guioptions-=R
-    " 禁止显示菜单和工具条
-    set guioptions-=m
-    set guioptions-=Tk
-    set guitablabel=%M\ %t
-    set showtabline=1
-    set noimd
-    if has("gui_gtk2") "GTK2
-        set guifont=Monaco\ 12,Monospace\ 12
-    endif
-else
-    if &term == 'xterm' || &term == 'screen'
-        set t_Co=256
-    endif
-endif
-
-" =====================================================
 " 编码
 " =====================================================
-" 设置新文件的编码为 UTF-8
+" vim的内部编码
 set encoding=utf-8
+" vim与屏幕/键盘交互时使用的编码
+set termencoding=utf-8
+" vim 当前编辑的文件在存储时的编码
+set fileencoding=utf-8
 " 自动判断编码时，依次尝试以下编码：
-set fileencodings=utf-8,gb18030,gbk,big5,cp936,bucs-bom,ig5,euc-jp,euc-kr,latin1
+set fileencodings=utf-8,gbk,gb18030,big5,cp936,bucs-bom,ig5,euc-jp,euc-kr,latin1
+" 设置帮助为中文
 set helplang=cn
 " 语言设置
 set langmenu=zh_CN.UTF-8
-" 下面这句只影响普通模式 (非图形界面) 下的 Vim。
-set termencoding=utf-8
 " 这三种格式支持所有
 set fileformats=unix,dos,mac
 
